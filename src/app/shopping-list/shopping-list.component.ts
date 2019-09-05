@@ -15,7 +15,9 @@ ingredients: Ingredients[] = [
 ]
 
 constructor() { }
-
+  addIngredient(ingrediwnt:Ingredients){
+    this.ingredients.push(ingrediwnt);
+  }
   ngOnInit() {
   }
 
