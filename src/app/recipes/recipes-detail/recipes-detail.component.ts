@@ -5,7 +5,7 @@ import {RecipeService} from "../../recipe.service";
 @Component({
   selector: 'app-recipes-detail',
   templateUrl: './recipes-detail.component.html',
-  styleUrls: ['./recipes-detail.component.css']
+  styleUrls: ['./recipes-detail.component.css'],
 })
 export class RecipesDetailComponent implements OnInit {
   @Input() selectedRecipe:Recipe;
@@ -14,5 +14,7 @@ export class RecipesDetailComponent implements OnInit {
   ngOnInit() {
     this.recipeservice.selectrecipe.subscribe(this.selectedRecipe);
   }
-
+  AddtoSL(){
+    this.recipeservice.addIngToSl(this.selectedRecipe.ingredients);
+  }
 }
