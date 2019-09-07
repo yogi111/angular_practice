@@ -5,9 +5,13 @@ import {ShoppinglistService} from "./shoppinglist.service";
 
 @Injectable()
 export class RecipeService {
+  selectedrecipe: Recipe;
+  selectedIng: Ingredients[];
+  selectrecipe = new EventEmitter<Recipe>();
   private recipes: Recipe[] = [
     new Recipe
     (
+      '1',
       'test1 Recipe',
       'test 1',
       'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
@@ -19,6 +23,7 @@ export class RecipeService {
 )
     ,
     new Recipe(
+      '2',
       'test2 Recipe',
       'test 2',
   'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
@@ -30,6 +35,7 @@ export class RecipeService {
     )
     ,
     new Recipe(
+      '3',
       'test3 Recipe',
       'test 3',
       'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
@@ -40,13 +46,14 @@ export class RecipeService {
         ]
     )
   ]
-  getrecipes(){
+  getrecipes() {
     return this.recipes.slice();
   }
-  constructor(private SLservice: ShoppinglistService){};
-  selectrecipe = new EventEmitter<Recipe>();
+  constructor(private SLservice: ShoppinglistService) {
+  }
 
-  addIngToSl( ing: Ingredients[]){
-    this.SLservice.addingredents(ing);
+  addIngToSl(id:number) {
+    this.selectedIng = this.getrecipes()[id].ingredients;
+    this.SLservice.addingredents(this.selectedIng);
   }
 }

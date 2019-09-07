@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Ingredients} from "../shared/ingredients.model";
 import {ShoppinglistService} from "../shoppinglist.service";
+import {log} from "util";
 
 @Component({
   selector: 'app-shopping-list',
@@ -8,17 +9,14 @@ import {ShoppinglistService} from "../shoppinglist.service";
   styleUrls: ['./shopping-list.component.css'],
   providers: [ ShoppinglistService ]
 })
-export class ShoppingListComponent implements OnInit {
-private ingredients: Ingredients[] ;
+export class ShoppingListComponent implements OnInit, AfterViewInit {
+  ingredients: Ingredients[] ;
 constructor(private shoppinglistservice : ShoppinglistService) { }
   ngOnInit() {
-  this.ingredients = this.shoppinglistservice.getingredient();
-  this.shoppinglistservice.IngredientsUpadated.subscribe((ingredient: Ingredients[]) => {
-      this.ingredients = ingredient;
-    });
-  this.shoppinglistservice.IngredientUpadated.subscribe((ingredient: Ingredients[]) => {
+    console.log('on view init');
+    this.ingredients = this.shoppinglistservice.getingredient();
+    this.shoppinglistservice.IngredientUpadated.subscribe((ingredient: Ingredients[]) => {
     this.ingredients = ingredient;
+    console.log('sub called');
     });
-  }
-
 }
