@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Ingredients} from "../shared/ingredients.model";
 import {ShoppinglistService} from "../shoppinglist.service";
-import {log} from "util";
+
 
 @Component({
   selector: 'app-shopping-list',
@@ -9,14 +9,15 @@ import {log} from "util";
   styleUrls: ['./shopping-list.component.css'],
   providers: [ ShoppinglistService ]
 })
-export class ShoppingListComponent implements OnInit, AfterViewInit {
+export class ShoppingListComponent implements OnInit {
   ingredients: Ingredients[] ;
 constructor(private shoppinglistservice : ShoppinglistService) { }
   ngOnInit() {
     console.log('on view init');
     this.ingredients = this.shoppinglistservice.getingredient();
     this.shoppinglistservice.IngredientUpadated.subscribe((ingredient: Ingredients[]) => {
-    this.ingredients = ingredient;
-    console.log('sub called');
+      this.ingredients = ingredient;
+      console.log('sub called');
     });
+  }
 }
