@@ -26,7 +26,7 @@ export class ShoppinglistService {
       const ings = this.ingredients;
       observer.next(ings);
     });
-    console,log(this.ingredientsUpdated);
+    console.log(this.ingredientsUpdated);
   }
 
 }
