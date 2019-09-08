@@ -4,6 +4,7 @@ import {RecipesComponent} from "./recipes/recipes.component";
 import {RecipesDetailComponent} from "./recipes/recipes-detail/recipes-detail.component";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {RecipeStatrtComponent} from "./recipes/recipe-statrt/recipe-statrt.component";
+import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
 const addrout: Route[] = [
   {
     path: ' ' ,
@@ -20,8 +21,16 @@ const addrout: Route[] = [
         pathMatch: 'full'
       },
       {
+        path: 'new',
+        component: RecipeEditComponent
+      },
+      {
         path: ':id',
         component: RecipesDetailComponent
+      },
+      {
+        path: ':id/edit',
+        component: RecipeEditComponent
       },
     ]
   },

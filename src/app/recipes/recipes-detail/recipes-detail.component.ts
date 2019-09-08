@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Recipe} from "../recipe.model";
 import {RecipeService} from "../../recipe.service";
 import {Ingredients} from "../../shared/ingredients.model";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import {__values} from "tslib";
 import {log} from "util";
 
@@ -14,7 +14,8 @@ import {log} from "util";
 export class RecipesDetailComponent implements OnInit {
   selectedRecipe: Recipe ;
   id : string;
-  constructor(private recipeservice: RecipeService, private raout: ActivatedRoute ) { }
+  constructor(private recipeservice: RecipeService, private raout: ActivatedRoute,
+              private  router: Router) { }
 
   ngOnInit() {
     this.raout.params.
@@ -25,5 +26,8 @@ export class RecipesDetailComponent implements OnInit {
   }
   AddtoSL() {
     this.recipeservice.addIngToSl((Number ( this.raout.snapshot.params.id ) - 1));
+  }
+  editrecipe(){
+    this.router.navigate(['edit'], {relativeTo: this.raout} );
   }
 }
