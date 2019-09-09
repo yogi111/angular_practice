@@ -17,12 +17,8 @@ constructor(private shoppinglistservice : ShoppinglistService) {
 }
   ngOnInit() {
     this.ingredients = this.shoppinglistservice.getingredient();
-    this.shoppinglistservice.IngredientUpadated.subscribe((ingredient: Ingredients[]) => {
-      console.log(this.ingredients);
-      this.ingredients = ingredient;
-    });
-    this.subscription =  this.shoppinglistservice.ingredientsUpdated.subscribe(next => {
-      console.log(next);
+    this.subscription = this.shoppinglistservice.IngredientUpadated.subscribe((ingredient: Ingredients[]) => {
+    this.ingredients = ingredient;
     });
   }
   ngOnDestroy() {
