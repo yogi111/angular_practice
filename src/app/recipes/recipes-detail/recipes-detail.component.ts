@@ -12,15 +12,20 @@ import {ShoppinglistService} from "../../shoppinglist.service";
 })
 export class RecipesDetailComponent implements OnInit {
   selectedRecipe: Recipe ;
+  Id = Number(this.raout.snapshot.params.id) - 1;
+
   constructor(private recipeservice: RecipeService, private raout: ActivatedRoute,
               private  router: Router, private shoppingservice: ShoppinglistService) { }
 
   ngOnInit() {
     this.raout.params.
     subscribe((params: Params) => {
-      this.selectedRecipe = this.recipeservice.getrecipes()
-        [Number(this.raout.snapshot.params.id ) - 1];
+      this.selectedRecipe = this.recipeservice.getrecipes()[this.Id];
     });
+  }
+  DeleteRecipe(Id) {
+    this.recipeservice.deleteRecipe(this.Id);
+    this.router.navigate("../");
   }
   AddtoSL() {
     this.recipeservice.addIngToSl((Number ( this.raout.snapshot.params.id ) - 1));

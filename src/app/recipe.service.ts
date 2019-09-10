@@ -2,8 +2,11 @@ import {Recipe} from "./recipes/recipe.model";
 import { Injectable } from "@angular/core";
 import {Ingredients} from "./shared/ingredients.model";
 import {ShoppinglistService} from "./shoppinglist.service";
+import {Subject} from "rxjs";
 @Injectable()
 export class RecipeService {
+  DeleteIngredient = new Subject<Ingredients[]>();
+  RecipesUpdated =  new Subject<Recipe[]>();
   selectedIng: Ingredients[];
   private recipes: Recipe[] = [
     new Recipe
@@ -48,7 +51,27 @@ export class RecipeService {
   }
   constructor(private SLservice: ShoppinglistService) {
   }
-
+  updaterecipe(recipe : Recipe , index : number) {
+    const selectRecipe = this.getrecipes()[index];
+    selectRecipe.name = recipe.name;
+    selectRecipe.imagePath = recipe.imagepath;
+    selectRecipe.description = recipe.description;
+    selectRecipe.ingredients = recipe.ingredients;
+  }
+  addnewRecipe(newRecipe: Recipe){
+    newRecipe.Id = String(this.recipes.length + 1) ;
+    console.log(newRecipe);
+    this.recipes.push(newRecipe);
+    this.RecipesUpdated.next(this.recipes);
+  }
+  deleteRecipe(index){
+    this.getrecipes().splice(index, 1);
+    this.RecipesUpdated.next(this.recipes);
+  }
+  deleteIngredient( Ingindex: number, recipeIndex: number ) {
+    this.recipes[recipeIndex].ingredients.splice( Ingindex , 1);
+    this.DeleteIngredient.next( this.recipes[recipeIndex].ingredients);
+  }
   addIngToSl(id: number) {
     this.selectedIng = this.getrecipes()[id].ingredients;
     this.SLservice.addingredents(this.selectedIng);
