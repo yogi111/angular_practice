@@ -16,7 +16,8 @@
       </div>
       <div class="row">
         <div class="col-xs-12 btn-group" >
-          <button class="btn btn-success" type="submit" [disabled]="!f.valid" >Add</button>
+          <button class="btn btn-success" type="submit" *ngIf="!editMode" [disabled]="!f.valid" >Add</button>
+          <button class="btn btn-success" type="submit" *ngIf="editMode" [disabled]="!f.valid" >Update</button>
           <button class="btn btn-danger" type="button" (click)="ondelete(f)" [disabled]="!editMode">Delete</button>
           <button class="btn btn-primary" type="button" (click)="onreset(f)" [disabled]="!(f.dirty || editMode)">Clear</button>
         </div>
