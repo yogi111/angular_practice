@@ -1,9 +1,7 @@
 import {Recipe} from "./recipes/recipe.model";
-import {EventEmitter, Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 import {Ingredients} from "./shared/ingredients.model";
 import {ShoppinglistService} from "./shoppinglist.service";
-import {Subject} from "rxjs";
-
 @Injectable()
 export class RecipeService {
   selectedIng: Ingredients[];
@@ -51,7 +49,7 @@ export class RecipeService {
   constructor(private SLservice: ShoppinglistService) {
   }
 
-  addIngToSl(id:number) {
+  addIngToSl(id: number) {
     this.selectedIng = this.getrecipes()[id].ingredients;
     this.SLservice.addingredents(this.selectedIng);
   }

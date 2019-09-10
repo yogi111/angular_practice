@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Recipe} from "../recipe.model";
 import {RecipeService} from "../../recipe.service";
 import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ShoppinglistService} from "../../shoppinglist.service";
 
 
 @Component({
@@ -12,7 +13,7 @@ import {ActivatedRoute, Params, Router} from "@angular/router";
 export class RecipesDetailComponent implements OnInit {
   selectedRecipe: Recipe ;
   constructor(private recipeservice: RecipeService, private raout: ActivatedRoute,
-              private  router: Router) { }
+              private  router: Router, private shoppingservice: ShoppinglistService) { }
 
   ngOnInit() {
     this.raout.params.
@@ -23,6 +24,7 @@ export class RecipesDetailComponent implements OnInit {
   }
   AddtoSL() {
     this.recipeservice.addIngToSl((Number ( this.raout.snapshot.params.id ) - 1));
+    this.router.navigate(['shopping-list']);
   }
   editrecipe(){
     this.router.navigate(['edit'], {relativeTo: this.raout} );
