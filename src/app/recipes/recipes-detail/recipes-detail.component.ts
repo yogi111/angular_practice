@@ -20,12 +20,12 @@ export class RecipesDetailComponent implements OnInit {
   ngOnInit() {
     this.raout.params.
     subscribe((params: Params) => {
-      this.selectedRecipe = this.recipeservice.getrecipes()[this.Id];
+      this.selectedRecipe = this.recipeservice.getrecipes()[Number(this.raout.snapshot.params.id) - 1];
     });
   }
-  DeleteRecipe(Id) {
+  DeleteRecipe() {
     this.recipeservice.deleteRecipe(this.Id);
-    this.router.navigate("../");
+    this.router.navigate(['../'] , {relativeTo: this.raout});
   }
   AddtoSL() {
     this.recipeservice.addIngToSl((Number ( this.raout.snapshot.params.id ) - 1));

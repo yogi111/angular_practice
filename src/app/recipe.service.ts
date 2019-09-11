@@ -2,11 +2,11 @@ import {Recipe} from "./recipes/recipe.model";
 import { Injectable } from "@angular/core";
 import {Ingredients} from "./shared/ingredients.model";
 import {ShoppinglistService} from "./shoppinglist.service";
-import {Subject} from "rxjs";
+import {ReplaySubject, Subject} from "rxjs";
 @Injectable()
 export class RecipeService {
-  DeleteIngredient = new Subject<Ingredients[]>();
-  RecipesUpdated =  new Subject<Recipe[]>();
+  DeleteIngredient = new ReplaySubject<Ingredients[]>(10);
+  RecipesUpdated =  new ReplaySubject<Recipe[]>(10);
   selectedIng: Ingredients[];
   private recipes: Recipe[] = [
     new Recipe
@@ -54,18 +54,19 @@ export class RecipeService {
   updaterecipe(recipe : Recipe , index : number) {
     const selectRecipe = this.getrecipes()[index];
     selectRecipe.name = recipe.name;
-    selectRecipe.imagePath = recipe.imagepath;
+    selectRecipe.imagePath = recipe.imagePath;
     selectRecipe.description = recipe.description;
     selectRecipe.ingredients = recipe.ingredients;
   }
-  addnewRecipe(newRecipe: Recipe){
+  addnewRecipe(newRecipe: Recipe) {
     newRecipe.Id = String(this.recipes.length + 1) ;
     console.log(newRecipe);
     this.recipes.push(newRecipe);
     this.RecipesUpdated.next(this.recipes);
   }
-  deleteRecipe(index){
-    this.getrecipes().splice(index, 1);
+  deleteRecipe(index) {
+    debugger;
+    this.recipes.splice(index, 1);
     this.RecipesUpdated.next(this.recipes);
   }
   deleteIngredient( Ingindex: number, recipeIndex: number ) {

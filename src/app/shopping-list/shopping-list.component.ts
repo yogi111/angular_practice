@@ -8,7 +8,6 @@ import {Subscription} from "rxjs";
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.css'],
-  providers: [ ShoppinglistService ]
 })
 export class ShoppingListComponent implements OnInit , OnDestroy{
   ingredients: Ingredients[] ;
