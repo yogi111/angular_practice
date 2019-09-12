@@ -19,6 +19,10 @@ export class RecipesListComponent implements OnInit {
   this.recipeservice.RecipesUpdated.asObservable().subscribe(( recipes: Recipe[]) => {
     this.recipes = recipes;
   });
+  this.recipeservice.RecipeFetched.asObservable().subscribe(( recipes: Recipe[]) => {
+      this.recipes = recipes;
+      console.log(recipes);
+    });
   }
   navigateto() {
     this.router.navigate(['new'], { relativeTo: this.rout} );

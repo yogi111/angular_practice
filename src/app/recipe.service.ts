@@ -7,45 +7,51 @@ import {ReplaySubject, Subject} from "rxjs";
 export class RecipeService {
   DeleteIngredient = new ReplaySubject<Ingredients[]>(10);
   RecipesUpdated =  new ReplaySubject<Recipe[]>(10);
+  RecipeFetched =  new ReplaySubject<Recipe[]>(10);
+
   selectedIng: Ingredients[];
   private recipes: Recipe[] = [
-    new Recipe
-    (
-      '1',
-      'test1 Recipe',
-      'test 1',
-      'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
-      ,[
-        new Ingredients('xyz', 22),
-        new Ingredients('xyz', 22),
-        new Ingredients('xyz', 22)
-      ]
-)
-    ,
-    new Recipe(
-      '2',
-      'test2 Recipe',
-      'test 2',
-  'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
-      , [
-      new Ingredients('xyz', 22),
-      new Ingredients('xyz', 22),
-      new Ingredients('xyz', 22),
-      ]
-    )
-    ,
-    new Recipe(
-      '3',
-      'test3 Recipe',
-      'test 3',
-      'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
-        ,[
-          new Ingredients('xyz', 22),
-          new Ingredients('xyz', 22),
-          new Ingredients('xyz', 22)
-        ]
-    )
+//     new Recipe
+//     (
+//       '1',
+//       'test1 Recipe',
+//       'test 1',
+//       'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
+//       ,[
+//         new Ingredients('xyz', 22),
+//         new Ingredients('xyz', 22),
+//         new Ingredients('xyz', 22)
+//       ]
+// )
+//     ,
+//     new Recipe(
+//       '2',
+//       'test2 Recipe',
+//       'test 2',
+//   'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
+//       , [
+//       new Ingredients('xyz', 22),
+//       new Ingredients('xyz', 22),
+//       new Ingredients('xyz', 22),
+//       ]
+//     )
+//     ,
+//     new Recipe(
+//       '3',
+//       'test3 Recipe',
+//       'test 3',
+//       'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
+//         ,[
+//           new Ingredients('xyz', 22),
+//           new Ingredients('xyz', 22),
+//           new Ingredients('xyz', 22)
+//         ]
+//     )
   ];
+  Loadrecipes(recipes: Recipe[]) {
+    this.recipes.push(...recipes);
+    this.RecipeFetched.next(this.recipes);
+  }
   getrecipes() {
     return this.recipes.slice();
   }
@@ -65,7 +71,6 @@ export class RecipeService {
     this.RecipesUpdated.next(this.recipes);
   }
   deleteRecipe(index) {
-    debugger;
     this.recipes.splice(index, 1);
     this.RecipesUpdated.next(this.recipes);
   }

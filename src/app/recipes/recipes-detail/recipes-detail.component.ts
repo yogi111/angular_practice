@@ -16,11 +16,10 @@ export class RecipesDetailComponent implements OnInit {
 
   constructor(private recipeservice: RecipeService, private raout: ActivatedRoute,
               private  router: Router, private shoppingservice: ShoppinglistService) { }
-
   ngOnInit() {
     this.raout.params.
     subscribe((params: Params) => {
-      this.selectedRecipe = this.recipeservice.getrecipes()[Number(this.raout.snapshot.params.id) - 1];
+      this.selectedRecipe = this.recipeservice.getrecipes()[this.raout.snapshot.params.id];
     });
   }
   DeleteRecipe() {
@@ -28,7 +27,7 @@ export class RecipesDetailComponent implements OnInit {
     this.router.navigate(['../'] , {relativeTo: this.raout});
   }
   AddtoSL() {
-    this.recipeservice.addIngToSl((Number ( this.raout.snapshot.params.id ) - 1));
+    this.recipeservice.addIngToSl((Number ( this.raout.snapshot.params.id )));
     this.router.navigate(['shopping-list']);
   }
   editrecipe(){

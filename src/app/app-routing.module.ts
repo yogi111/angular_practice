@@ -5,6 +5,7 @@ import {RecipesDetailComponent} from "./recipes/recipes-detail/recipes-detail.co
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {RecipeStatrtComponent} from "./recipes/recipe-statrt/recipe-statrt.component";
 import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
+import {RecipeResolverService} from "./Recipe.resolver.service";
 const addrout: Route[] = [
   {
     path: ' ' ,
@@ -26,11 +27,13 @@ const addrout: Route[] = [
       },
       {
         path: ':id',
-        component: RecipesDetailComponent
+        component: RecipesDetailComponent,
+        resolve: [RecipeResolverService]
       },
       {
         path: ':id/edit',
-        component: RecipeEditComponent
+        component: RecipeEditComponent,
+        resolve: [RecipeResolverService]
       },
     ]
   },
