@@ -15,8 +15,10 @@ import {ShoppinglistService} from './shoppinglist.service';
 import {AppRoutingModule} from './app-routing.module';
 import {RecipeStatrtComponent} from './recipes/recipe-statrt/recipe-statrt.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import {RecipeService} from "./recipe.service";
-import { HttpClientModule} from "@angular/common/http";
+import {RecipeService} from './recipe.service';
+import { HttpClientModule} from '@angular/common/http';
+import { AuthComponent } from './auth/auth/auth.component';
+import {LoaddingComponent} from "./shared/loading/loadingComponent/loadding.component";
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { HttpClientModule} from "@angular/common/http";
     DropdownDirective,
     RecipeStatrtComponent,
     RecipeEditComponent,
+    AuthComponent,
+    LoaddingComponent
   ],
   imports: [
     BrowserModule,
