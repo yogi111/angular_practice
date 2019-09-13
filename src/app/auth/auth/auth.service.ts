@@ -72,7 +72,7 @@ export class AuthService {
       this.logout();
     }, authExpirationtime);
   }
-  private  ErrorHandler(errorResponse: HttpResponse ) {
+  private  ErrorHandler(errorResponse: HttpResponse<any>) {
     let ErrorMessage = 'Unknowen Error Occurred !!';
     if (!errorResponse.error || !errorResponse.error.error ) {
       return throwError( ErrorMessage );

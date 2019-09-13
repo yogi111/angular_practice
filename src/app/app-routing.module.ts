@@ -8,6 +8,7 @@ import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
 import {RecipeResolverService} from "./Recipe.resolver.service";
 import {AuthComponent} from "./auth/auth/auth.component";
 import {AuthGard} from  "./auth/auth/auth.gard";
+import {RecipeGard} from "./recipes/recipe.gard";
 const addrout: Route[] = [
   {
     path: ' ' ,
@@ -46,7 +47,8 @@ const addrout: Route[] = [
   },
   {
     path: 'auth',
-    component: AuthComponent
+    component: AuthComponent,
+    canActivate: [RecipeGard]
   }
 
 ];
