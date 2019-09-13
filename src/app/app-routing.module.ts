@@ -7,6 +7,7 @@ import {RecipeStatrtComponent} from "./recipes/recipe-statrt/recipe-statrt.compo
 import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
 import {RecipeResolverService} from "./Recipe.resolver.service";
 import {AuthComponent} from "./auth/auth/auth.component";
+import {AuthGard} from  "./auth/auth/auth.gard";
 const addrout: Route[] = [
   {
     path: ' ' ,
@@ -15,7 +16,8 @@ const addrout: Route[] = [
   },
   {
     path: 'recipe',
-    component: RecipesComponent
+    component: RecipesComponent,
+    canActivate: [AuthGard]
     , children : [
       {
         path: '',
