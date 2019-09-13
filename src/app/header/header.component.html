@@ -6,13 +6,14 @@
       </button>
       <a href="#" class="navbar-brand">Recipe Book</a>
     </div>
-    <div class="navbar-collapse" [class.collapse]="collapsed">
+    <div class="navbar-collapse" [class.collapse]="!collapsed">
       <ul class="nav navbar-nav">
-        <li [routerLinkActive]="['active']"><a routerLink="recipe">Recipes</a></li>
-        <li [routerLinkActive]="['active']"><a routerLink="auth">Authentication</a></li>
-        <li [routerLinkActive]="['active']"><a routerLink="shopping-list">Shopping List</a></li>
+        <li [routerLinkActive]="['active']" *ngIf="IsAuthenticated"><a routerLink="recipe">Recipes</a></li>
+        <li [routerLinkActive]="['active']" *ngIf="!IsAuthenticated"><a routerLink="auth">Authentication</a></li>
+        <li [routerLinkActive]="['active']" ><a routerLink="shopping-list">Shopping List</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <li class="logout-link" *ngIf="IsAuthenticated" (click)="onLogout()">Logout</li>
         <li class="dropdown" appdropdown>
           <a class="dropdown-toggle" role="button">manage <span class="caret"></span> </a>
           <ul class="dropdown-menu">
