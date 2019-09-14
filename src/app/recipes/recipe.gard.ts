@@ -12,7 +12,7 @@ export class RecipeGard implements CanActivate{
     take(1),
     map(users => {
       const isAuth = !!users;
-      if (isAuth){
+      if (isAuth) {
         return this.router.createUrlTree(['/recipe']);
       }
       return true ;

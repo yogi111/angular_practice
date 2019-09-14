@@ -8,15 +8,13 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <div
-      class="btn-group"
-      appdropdown>
+    <div class="btn-group dropdown" [ngClass]="show ? 'show': '' " (click)="Toggle()" appdropdown>
       <button
         type="button"
         class="btn btn-primary dropdown-toggle">
         Manage Recipe <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu" [ngClass]="show ? 'show': '' " (click)="Toggle()" >
         <li><a (click)="AddtoSL()">To Shopping List</a></li>
         <li><a  (click)="editrecipe()">Edit Recipe </a></li>
         <li><a  (click)="DeleteRecipe()">Delete Recipe</a></li>

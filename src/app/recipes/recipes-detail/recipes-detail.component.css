@@ -2,3 +2,6 @@ img {
   max-width: 350px;
   margin: 10px auto;
 }
+.dropdown-menu {
+  top: 30px !important;
+}

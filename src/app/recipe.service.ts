@@ -49,8 +49,15 @@ export class RecipeService {
 //     )
   ];
   Loadrecipes(recipes: Recipe[]) {
+  if(this.recipes.length < 1) {
     this.recipes.push(...recipes);
     this.RecipeFetched.next(this.recipes);
+  }
+  else{
+    if (this.recipes.length === recipes.length) {
+      console.log('threre is no need of fetching');
+    }
+  }
   }
   getrecipes() {
     return this.recipes.slice();

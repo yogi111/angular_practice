@@ -9,7 +9,7 @@ import {Subscription} from "rxjs";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy{
-UserSub:Subscription;
+UserSub: Subscription;
 IsAuthenticated = false;
 
   constructor(private authservice: AuthService, private dtastoringservice: DatastoringService) { }

@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpResponse} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {catchError, tap} from "rxjs/operators";
-import {BehaviorSubject, ReplaySubject, throwError} from "rxjs";
+import {BehaviorSubject, throwError} from "rxjs";
 import {User} from "./user.model";
 import {Router} from "@angular/router";
 
@@ -72,7 +72,7 @@ export class AuthService {
       this.logout();
     }, authExpirationtime);
   }
-  private  ErrorHandler(errorResponse: HttpResponse<any>) {
+  private  ErrorHandler(errorResponse) {
     let ErrorMessage = 'Unknowen Error Occurred !!';
     if (!errorResponse.error || !errorResponse.error.error ) {
       return throwError( ErrorMessage );

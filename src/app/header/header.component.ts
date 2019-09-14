@@ -1,7 +1,9 @@
-import {Component, Output, EventEmitter, OnInit, OnDestroy} from '@angular/core';
+import {Component, Output, EventEmitter, OnInit, OnDestroy, ViewChild, ComponentFactoryResolver} from '@angular/core';
 import {DatastoringService} from "../datastoring.service";
 import {Subscription} from "rxjs";
 import {AuthService} from "../auth/auth/auth.service";
+import {AlertComponent} from "../shared/alert/alert.component";
+import {PlaceholderDirective} from "../shared/placeholder/placeholder.directive";
 
 @Component({
   selector: 'app-header',
@@ -13,8 +15,11 @@ export class HeaderComponent implements OnInit , OnDestroy{
   collapsed = false;
   UserSub: Subscription;
   IsAuthenticated = false;
+  AlertSub: Subscription;
+  @ViewChild(PlaceholderDirective , {static: false }) alertHost: PlaceholderDirective;
 
-constructor(private DataStoringService: DatastoringService, private Authservice: AuthService) { }
+
+  constructor(private DataStoringService: DatastoringService, private Authservice: AuthService,  private cmpFtry: ComponentFactoryResolver) { }
   ngOnInit() {
   this.UserSub =  this.Authservice.user.subscribe((user) => {
     this.IsAuthenticated = !!user;
@@ -27,11 +32,30 @@ constructor(private DataStoringService: DatastoringService, private Authservice:
   }
 
   fetchdata() {
-  this.DataStoringService.FetchRecipes().subscribe();
+  this.DataStoringService.FetchRecipes().subscribe(res => {
+    if(res == null){
+      this.Createalert('Oops! there is no Recipes');
+    }
+  });
   }
 
-  onLogout(){
+  onLogout() {
   this.Authservice.logout();
+  }
+  Createalert(message: string) {
+
+    const alertcmpFtry = this.cmpFtry.resolveComponentFactory(AlertComponent);
+
+    const HostRef = this.alertHost.viewcontainerref;
+    HostRef.clear();
+
+    const alertcmpref = HostRef.createComponent(alertcmpFtry);
+
+    alertcmpref.instance.message = message;
+    this.AlertSub = alertcmpref.instance.close.subscribe(() => {
+      this.AlertSub.unsubscribe();
+      HostRef.clear();
+    });
   }
 ngOnDestroy(){
   this.UserSub.unsubscribe();

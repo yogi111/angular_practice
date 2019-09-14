@@ -11,6 +11,7 @@ import {ShoppinglistService} from "../../shoppinglist.service";
   styleUrls: ['./recipes-detail.component.css'],
 })
 export class RecipesDetailComponent implements OnInit {
+  show = false;
   selectedRecipe: Recipe ;
   Id = Number(this.raout.snapshot.params.id) - 1;
 
@@ -21,6 +22,9 @@ export class RecipesDetailComponent implements OnInit {
     subscribe((params: Params) => {
       this.selectedRecipe = this.recipeservice.getrecipes()[this.raout.snapshot.params.id];
     });
+  }
+  Toggle(){
+    this.show = !this.show;
   }
   DeleteRecipe() {
     this.recipeservice.deleteRecipe(this.Id);
