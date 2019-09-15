@@ -15,7 +15,7 @@ import {SharedModule} from '../shared/shared.module';
     ReactiveFormsModule,
     FormsModule,
     RouterModule.forChild([{
-      path: 'auth',
+      path: '',
       component: AuthComponent,
       canActivate: [RecipeGard]
     }])

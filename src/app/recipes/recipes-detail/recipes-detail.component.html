@@ -8,15 +8,11 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <div class="btn-group dropdown" [ngClass]="show ? 'show': '' " (click)="Toggle()" appdropdown>
-      <button
-        type="button"
-        class="btn btn-primary dropdown-toggle">
-        Manage Recipe <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" [ngClass]="show ? 'show': '' " (click)="Toggle()" >
+    <div  class="btn-group dropdown" appdropdown>
+      <button class="btn btn-primary dropdown-toggle" type="button">Manage Recipe&ensp;<span class="caret"></span></button>
+      <ul class="dropdown-menu">
         <li><a (click)="AddtoSL()">To Shopping List</a></li>
-        <li><a  (click)="editrecipe()">Edit Recipe </a></li>
+        <li><a (click)="editrecipe()">Edit Recipe</a></li>
         <li><a  (click)="DeleteRecipe()">Delete Recipe</a></li>
       </ul>
     </div>
@@ -32,9 +28,7 @@
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let ing of selectedRecipe.ingredients">
         {{ing.name}} <span class="pull-right">{{ing.amount}}</span>
-
       </li>
-
     </ul>
   </div>
 </div>

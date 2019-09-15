@@ -1,11 +1,11 @@
-import {NgModule} from "@angular/core";
-import {Route, RouterModule} from "@angular/router";
-import {RecipesComponent} from "./recipes.component";
-import {AuthGard} from "../auth/auth/auth.gard";
-import {RecipeStatrtComponent} from "./recipe-statrt/recipe-statrt.component";
-import {RecipeEditComponent} from "./recipe-edit/recipe-edit.component";
-import {RecipesDetailComponent} from "./recipes-detail/recipes-detail.component";
-import {RecipeResolverService} from "../Recipe.resolver.service";
+import {NgModule} from '@angular/core';
+import {Route, RouterModule} from '@angular/router';
+import {RecipesComponent} from './recipes.component';
+import {AuthGard} from '../auth/auth/auth.gard';
+import {RecipeStatrtComponent} from './recipe-statrt/recipe-statrt.component';
+import {RecipeEditComponent} from './recipe-edit/recipe-edit.component';
+import {RecipesDetailComponent} from './recipes-detail/recipes-detail.component';
+import {RecipeResolverService} from '../Recipe.resolver.service';
 
 const addroot: Route[] = [
   {
