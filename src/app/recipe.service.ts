@@ -1,8 +1,12 @@
 import {Recipe} from "./recipes/recipe.model";
 import { Injectable } from "@angular/core";
 import {Ingredients} from "./shared/ingredients.model";
-import {ShoppinglistService} from "./shoppinglist.service";
-import {ReplaySubject, Subject} from "rxjs";
+import {ReplaySubject} from "rxjs";
+import { Store } from '@ngrx/store';
+import * as shoppingListAction from './shopping-list/STORE/shopping-list.action';
+import * as shoppingListReducer from './shopping-list/STORE/shopping-list.reducer';
+
+
 @Injectable()
 export class RecipeService {
   DeleteIngredient = new ReplaySubject<Ingredients[]>(10);
@@ -10,50 +14,13 @@ export class RecipeService {
   RecipeFetched =  new ReplaySubject<Recipe[]>(10);
 
   selectedIng: Ingredients[];
-  private recipes: Recipe[] = [
-//     new Recipe
-//     (
-//       '1',
-//       'test1 Recipe',
-//       'test 1',
-//       'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
-//       ,[
-//         new Ingredients('xyz', 22),
-//         new Ingredients('xyz', 22),
-//         new Ingredients('xyz', 22)
-//       ]
-// )
-//     ,
-//     new Recipe(
-//       '2',
-//       'test2 Recipe',
-//       'test 2',
-//   'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
-//       , [
-//       new Ingredients('xyz', 22),
-//       new Ingredients('xyz', 22),
-//       new Ingredients('xyz', 22),
-//       ]
-//     )
-//     ,
-//     new Recipe(
-//       '3',
-//       'test3 Recipe',
-//       'test 3',
-//       'https://asset.slimmingworld.co.uk/content/media/11596/jackfruit-chilli-iceland_sw_recipe.jpg?v1=JGXiore20qg9NNIj0tmc3TKfKw-jr0s127JqqpCA2x7sMviNgcAYh1epuS_Lqxebn9V_qusKHfwbF7MOUrAPptzBhXIUL1Xnq2Mmdvx4fOk&width=640&height=640'
-//         ,[
-//           new Ingredients('xyz', 22),
-//           new Ingredients('xyz', 22),
-//           new Ingredients('xyz', 22)
-//         ]
-//     )
-  ];
+  private recipes: Recipe[] = [];
+  constructor(private store: Store<shoppingListReducer.AppState>) {}
   Loadrecipes(recipes: Recipe[]) {
   if(this.recipes.length < 1) {
     this.recipes.push(...recipes);
     this.RecipeFetched.next(this.recipes);
-  }
-  else{
+  } else {
     if (this.recipes.length === recipes.length) {
       console.log('threre is no need of fetching');
     }
@@ -61,8 +28,6 @@ export class RecipeService {
   }
   getrecipes() {
     return this.recipes.slice();
-  }
-  constructor(private SLservice: ShoppinglistService) {
   }
   updaterecipe(recipe : Recipe , index : number) {
     const selectRecipe = this.getrecipes()[index];
@@ -87,6 +52,6 @@ export class RecipeService {
   }
   addIngToSl(id: number) {
     this.selectedIng = this.getrecipes()[id].ingredients;
-    this.SLservice.addingredents(this.selectedIng);
+    this.store.dispatch(new shoppingListAction.AddIngredients(this.selectedIng));
   }
 }
