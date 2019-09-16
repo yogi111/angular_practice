@@ -1,0 +1,19 @@
+.form-inline .form-group {
+  margin: 5px  12px;
+}
+.form-inline .form-group label {
+  margin: 0 5px;
+}
+
+h5 {
+  display: inline-block;
+}
+button.custom{
+  display: inline-block;
+  margin: 10px 20px;
+}
+
+input.ng-invalid.ng-touched
+,textarea.ng-invalid.ng-touched {
+  border: 1px solid red;
+}

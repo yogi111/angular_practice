@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-md-12">
+    <form [formGroup] = "recipeForm" (ngSubmit)="onsubmit(recipeForm) ">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="btn btn-group">
+            <button type="button" class="btn btn-danger" (click)="cancle()">Cancel</button>
+            <button type="submit" class="btn btn-success" [disabled]="!recipeForm.valid" >save</button>
+          </div>
+         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" formControlName="name">
+        </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="imgpath">ImagePath</label>
+            <input type="text" class="form-control" id="imgpath" formControlName="imagePath" #imagepath>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <img *ngIf="imagepath.value" [src]="imagepath.value" class="img-responsive">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="6" formControlName="description"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12" formArrayName="ingredients">
+            <h5><b>Ingredients</b></h5>
+          <button type="submit" class="btn btn-success custom" (click)="addingField()" type="button">Add Ingredient</button>
+          <div class="row" *ngFor="let ingredientCtrl of controls; let i  = index" [formGroup]="ingredientCtrl">
+            <div class="col-md-12">
+              <div class="form-inline">
+                <div class="form-group">
+                  <label for="IngName">Name</label>
+                  <input type="text" class="form-control" id="IngName" formControlName="name">
+                </div>
+                <div class="form-group">
+                  <label for="IngAmount">Amount</label>
+                  <input type="number" class="form-control" id="IngAmount" formControlName="amount" >
+                </div>
+                <button class="btn btn-danger" type="button" (click)="deleteIng(i)" >Delete</button>
+              </div>
+            </div>
+            </div>
+          </div>
+      </div>
+    </form>
+  </div>
+</div>
