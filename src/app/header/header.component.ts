@@ -4,7 +4,9 @@ import {Subscription} from "rxjs";
 import {AuthService} from "../auth/auth/auth.service";
 import {AlertComponent} from "../shared/alert/alert.component";
 import {PlaceholderDirective} from "../shared/placeholder/placeholder.directive";
-
+import { Store } from '@ngrx/store';
+import * as FromApp from '../Store/app.reducer';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -19,9 +21,16 @@ export class HeaderComponent implements OnInit , OnDestroy{
   @ViewChild(PlaceholderDirective , {static: false }) alertHost: PlaceholderDirective;
 
 
-  constructor(private DataStoringService: DatastoringService, private Authservice: AuthService,  private cmpFtry: ComponentFactoryResolver) { }
+  constructor(private DataStoringService: DatastoringService,
+              private Authservice: AuthService,
+              private cmpFtry: ComponentFactoryResolver,
+              private store: Store<FromApp.AppState>) { }
   ngOnInit() {
-  this.UserSub =  this.Authservice.user.subscribe((user) => {
+  this.UserSub =  this.store.select('auth')
+      .pipe(map(AuthState => {
+        return AuthState.user;
+      }))
+      .subscribe((user) => {
     this.IsAuthenticated = !!user;
     console.log(!!user);
     console.log(!user);

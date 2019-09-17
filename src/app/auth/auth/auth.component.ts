@@ -12,7 +12,7 @@ import {PlaceholderDirective} from '../../shared/placeholder/placeholder.directi
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-loginmode =  false;
+loginmode = false;
 loading = false;
 error: string = null;
 authObs: Observable<Authresponce>;

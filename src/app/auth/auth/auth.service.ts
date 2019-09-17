@@ -1,9 +1,12 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {catchError, tap} from "rxjs/operators";
-import {BehaviorSubject, throwError} from "rxjs";
-import {User} from "./user.model";
-import {Router} from "@angular/router";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {catchError, tap} from 'rxjs/operators';
+import {BehaviorSubject, throwError} from 'rxjs';
+import {User} from './user.model';
+import {Router} from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../Store/app.reducer';
+import * as Authaction from '../store/auth.action';
 
 export interface Authresponce {
   idToken: string ;
@@ -15,12 +18,14 @@ export interface Authresponce {
 }
 @Injectable({providedIn : 'root'})
 export class AuthService {
-  user =  new BehaviorSubject<User>(null);
+  // user =  new BehaviorSubject<User>(null);
   logouttimer: any;
-  constructor(private http: HttpClient , private router: Router) { }
+  constructor(private http: HttpClient,
+              private router: Router,
+              private store: Store<fromApp.AppState>) { }
 
-  autoLogin(){
-    const userdata:{
+  autoLogin() {
+    const userdata: {
       email: string,
       Id: string,
       _token: string;
@@ -31,7 +36,13 @@ export class AuthService {
     }
     const LoadUser = new User(userdata.email, userdata.Id , userdata._token , new Date(userdata._tokenExpirationDate));
     if (LoadUser.token) {
-      this.user.next(LoadUser);
+      this.store.dispatch(new Authaction.Login({
+        email: LoadUser.email,
+        userId: LoadUser.Id,
+        token: LoadUser.token,
+        expirationDate: new Date(userdata._tokenExpirationDate)
+      }));
+      // this.user.next(LoadUser);
       const expireRemain =  new Date(userdata._tokenExpirationDate).getTime() - new Date().getTime() ;
       this.autoLogout(expireRemain);
     }
@@ -58,7 +69,8 @@ export class AuthService {
       }));
   }
   logout() {
-    this.user.next(null);
+    // this.user.next(null);
+    this.store.dispatch(new Authaction.Logout());
     localStorage.clear();
     this.router.navigate(['/auth']);
     if (this.logouttimer) {
@@ -95,10 +107,16 @@ export class AuthService {
     }
   }
 
-  private handleAuthantication(email: string , useridId: string , tokan: string, expiresIn: number) {
+  private handleAuthantication(email: string , userid: string , token: string, expiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000) ;
-    const user = new User(email, useridId, tokan , expirationDate);
-    this.user.next( user );
+    const user = new User(email, userid, token , expirationDate);
+    // this.user.next( user );
+    this.store.dispatch(new Authaction.Login({
+      email,
+      userId: userid,
+      token,
+      expirationDate
+    }));
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userdata', JSON.stringify(user));
   }
