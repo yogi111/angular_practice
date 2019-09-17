@@ -2,16 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { AppComponent } from './app.component';
-import {ShoppinglistService} from './shoppinglist.service';
 import {AppRoutingModule} from './app-routing.module';
-import {RecipeService} from './recipe.service';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {AuthInterceptorService} from './auth/auth/auth-interceptor.service';
+import { HttpClientModule} from '@angular/common/http';
 import {AlertComponent} from './shared/alert/alert.component';
 import {SharedModule} from './shared/shared.module';
-import {CoreModule} from "./core.module";
+import {CoreModule} from './core.module';
 import { StoreModule } from '@ngrx/store';
-import { shoppingListReducer } from './shopping-list/STORE/shopping-list.reducer';
+import * as fromrApp from './Store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -22,7 +19,7 @@ import { shoppingListReducer } from './shopping-list/STORE/shopping-list.reducer
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    StoreModule.forRoot({shoppinglist: shoppingListReducer}),
+    StoreModule.forRoot(fromrApp.appReducer),
     SharedModule,
     CoreModule,
   ],

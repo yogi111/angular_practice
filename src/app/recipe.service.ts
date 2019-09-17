@@ -15,7 +15,7 @@ export class RecipeService {
 
   selectedIng: Ingredients[];
   private recipes: Recipe[] = [];
-  constructor(private store: Store<shoppingListReducer.AppState>) {}
+  constructor(private store: Store<shoppingListReducer.State>) {}
   Loadrecipes(recipes: Recipe[]) {
   if(this.recipes.length < 1) {
     this.recipes.push(...recipes);

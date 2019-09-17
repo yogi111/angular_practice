@@ -9,9 +9,9 @@ export  class RecipeResolverService implements Resolve<Recipe[]>{
   constructor(private datastoringservice: DatastoringService, private RecipeService: RecipeService) { }
   resolve(route: ActivatedRouteSnapshot , state: RouterStateSnapshot ) {
     const recipes = this.RecipeService.getrecipes();
-    if(recipes.length == 0){
+    if (recipes.length === 0) {
       return  this.datastoringservice.FetchRecipes();
-    }else {
+    } else {
       return recipes;
     }
   }
