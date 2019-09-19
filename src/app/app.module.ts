@@ -9,6 +9,10 @@ import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core.module';
 import { StoreModule } from '@ngrx/store';
 import * as fromrApp from './Store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth/store/auth.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import  { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -20,6 +24,8 @@ import * as fromrApp from './Store/app.reducer';
     HttpClientModule,
     AppRoutingModule,
     StoreModule.forRoot(fromrApp.appReducer),
+    EffectsModule.forRoot([AuthEffects]),
+    StoreDevtoolsModule.instrument({logOnly: environment.production}),
     SharedModule,
     CoreModule,
   ],

@@ -7,6 +7,8 @@ import {PlaceholderDirective} from "../shared/placeholder/placeholder.directive"
 import { Store } from '@ngrx/store';
 import * as FromApp from '../Store/app.reducer';
 import { map } from 'rxjs/operators';
+import * as Authaction from '../auth/store/auth.action';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -24,7 +26,8 @@ export class HeaderComponent implements OnInit , OnDestroy{
   constructor(private DataStoringService: DatastoringService,
               private Authservice: AuthService,
               private cmpFtry: ComponentFactoryResolver,
-              private store: Store<FromApp.AppState>) { }
+              private store: Store<FromApp.AppState>,
+              private route: Router) { }
   ngOnInit() {
   this.UserSub =  this.store.select('auth')
       .pipe(map(AuthState => {
@@ -32,8 +35,6 @@ export class HeaderComponent implements OnInit , OnDestroy{
       }))
       .subscribe((user) => {
     this.IsAuthenticated = !!user;
-    console.log(!!user);
-    console.log(!user);
   });
 }
   savedata() {
@@ -49,7 +50,8 @@ export class HeaderComponent implements OnInit , OnDestroy{
   }
 
   onLogout() {
-  this.Authservice.logout();
+    this.store.dispatch(new Authaction.Logout());
+    this.route.navigate(['auth']);
   }
   Createalert(message: string) {
 
@@ -66,7 +68,7 @@ export class HeaderComponent implements OnInit , OnDestroy{
       HostRef.clear();
     });
   }
-ngOnDestroy(){
+ngOnDestroy() {
   this.UserSub.unsubscribe();
 }
 }
