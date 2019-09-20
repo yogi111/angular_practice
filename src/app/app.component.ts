@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth/auth.service';
-import { DatastoringService } from './datastoring.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../app/Store/app.reducer';
@@ -18,7 +17,6 @@ export class AppComponent implements OnInit, OnDestroy {
     IsAuthenticated = false;
 
     constructor(private authservice: AuthService,
-                private dtastoringservice: DatastoringService,
                 private store: Store<fromApp.AppState>) {
     }
 
@@ -32,9 +30,6 @@ export class AppComponent implements OnInit, OnDestroy {
             .subscribe((user) => {
                 this.IsAuthenticated = !!user;
             });
-        if (this.IsAuthenticated) {
-            this.dtastoringservice.FetchRecipes().subscribe();
-        }
     }
 
     ngOnDestroy() {

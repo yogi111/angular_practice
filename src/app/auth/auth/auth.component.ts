@@ -6,6 +6,7 @@ import { PlaceholderDirective } from '../../shared/placeholder/placeholder.direc
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../Store/app.reducer';
 import * as authActions from '../store/auth.action';
+import { Route, Router } from '@angular/router';
 
 @Component({
     selector: 'app-auth',
@@ -21,7 +22,8 @@ export class AuthComponent implements OnInit, OnDestroy {
     @ViewChild(PlaceholderDirective, { static: false }) alertHost: PlaceholderDirective;
 
     constructor(private cmpFtry: ComponentFactoryResolver,
-                private store: Store<fromApp.AppState>) {
+                private store: Store<fromApp.AppState>,
+                private route: Router) {
     }
 
     authanticate(Auth: NgForm) {
@@ -35,6 +37,11 @@ export class AuthComponent implements OnInit, OnDestroy {
             } else {
                 this.store.dispatch(new authActions.SignupStart({ email, password }));
             }
+            this.store.select('auth').subscribe( (authdata) => {
+                if (authdata.user) {
+                    this.route.navigate(['recipe']);
+                }
+            });
         }
         Auth.reset();
     }

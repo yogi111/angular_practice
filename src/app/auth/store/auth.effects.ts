@@ -5,17 +5,18 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../auth/user.model';
 
 export interface Authresponce {
-    idToken: string ;
-    email: string ;
-    refreshToken: string ;
-    expiresIn: string ;
-    localId: string ;
+    idToken: string;
+    email: string;
+    refreshToken: string;
+    expiresIn: string;
+    localId: string;
     registered?: boolean
 }
+
 const handleError = (errRes) => {
     let ErrorMessage = 'Unknowen Error Occurred !!';
     if (!errRes.error || !errRes.error.error) {
@@ -102,10 +103,12 @@ export class AuthEffects {
         })
     );
 
-    @Effect({ dispatch: false })
-    authRedirect = this.action$.pipe(ofType(AuthActions.AUTHENTICATE_SUCSESS), tap(() => {
-        this.router.navigate(['/']);
-    }));
+    // // @ts-ignore
+    // @Effect({ dispatch: false })
+    // authRedirect = this.action$.pipe(ofType(AuthActions.AUTHENTICATE_SUCSESS), tap((ref) => {
+    //         this.router.navigate(['../'], { relativeTo: this.route });
+    //     })
+    // );
 
     @Effect()
     autologin = this.action$.pipe(ofType(AuthActions.AUTO_LOGIN), map(() => {
@@ -116,7 +119,7 @@ export class AuthEffects {
             _tokenExpirationDate: string;
         } = JSON.parse(localStorage.getItem('userdata'));
         if (!userdata) {
-            return { type: 'dummy'};
+            return { type: 'dummy' };
         }
         const LoadUser = new User(userdata.email, userdata.Id, userdata._token, new Date(userdata._tokenExpirationDate));
         if (LoadUser.token) {
@@ -129,7 +132,7 @@ export class AuthEffects {
                 expirationDate: new Date(userdata._tokenExpirationDate)
             });
         } else {
-            return  { type: 'dummy'};
+            return { type: 'dummy' };
         }
     }));
 
@@ -142,6 +145,7 @@ export class AuthEffects {
 
     constructor(private action$: Actions,
                 private http: HttpClient,
+                private route: ActivatedRoute,
                 private router: Router,
                 private authservice: AuthService) {
     }

@@ -1,7 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import { Recipe} from "../recipe.model";
-import {RecipeService} from "../../recipe.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, Input, OnInit } from '@angular/core';
+import { Recipe} from '../recipe.model';
+import {ActivatedRoute, Router} from '@angular/router';
+import { Store } from '@ngrx/store';
+import * as FromApp from '../../Store/app.reducer';
+import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-recipes-list',
@@ -9,20 +12,23 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./recipes-list.component.css'],
 })
 export class RecipesListComponent implements OnInit {
-  recipes: Recipe[];
+  @Input() recipes: Recipe[];
 
-  constructor(private  recipeservice: RecipeService,
-              private router: Router ,
-              private rout: ActivatedRoute) { }
+  constructor(private router: Router,
+              private rout: ActivatedRoute,
+              private store: Store<FromApp.AppState> ) { }
   ngOnInit() {
-  this.recipes =  this.recipeservice.getrecipes();
-  this.recipeservice.RecipesUpdated.asObservable().subscribe(( recipes: Recipe[]) => {
+  this.store.select('recipes')
+      .pipe(
+          map(resp => {
+            return resp.recipes;
+          } )
+      )
+      .subscribe(( recipes: Recipe[]) => {
     this.recipes = recipes;
+
+    console.log(this.recipes);
   });
-  this.recipeservice.RecipeFetched.asObservable().subscribe(( recipes: Recipe[]) => {
-      this.recipes = recipes;
-      console.log(recipes);
-    });
   }
   navigateto() {
     this.router.navigate(['new'], { relativeTo: this.rout} );

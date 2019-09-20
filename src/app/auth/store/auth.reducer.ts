@@ -1,7 +1,7 @@
 import { User } from '../auth/user.model';
 import * as AuthAction from '../store/auth.action';
 export interface State {
-    user:User;
+    user: User;
     authError: string;
     loading: boolean;
 }
